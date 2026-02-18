@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Entity
@@ -14,16 +16,23 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO) 
     private int id;
     private String nombreUsuario;
-    private String contraseña;
+    private String contrasenia;
+    
+    @ManyToOne
+    @JoinColumn(name="fk_rol")
+    private Rol unRol;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String nombreUsuario, String contraseña) {
+    public Usuario(int id, String nombreUsuario, String contrasenia, Rol unRol) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
+        this.unRol = unRol;
     }
+
+  
 
     public int getId() {
         return id;
@@ -41,12 +50,20 @@ public class Usuario implements Serializable {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public Rol getUnRol() {
+        return unRol;
+    }
+
+    public void setUnRol(Rol unRol) {
+        this.unRol = unRol;
     }
     
    

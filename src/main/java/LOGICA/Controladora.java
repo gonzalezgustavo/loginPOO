@@ -16,7 +16,7 @@ public class Controladora {
        for (Usuario usu : listaUsuarios ){
            
            if(usu.getNombreUsuario().equals(usuario)){
-               if(usu.getContraseña().equals(contrasenia)){
+               if(usu.getContrasenia().equals(contrasenia)){
                    mensaje="Usuario y Contraseña correctos";
                    return mensaje;
                
