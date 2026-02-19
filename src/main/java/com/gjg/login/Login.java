@@ -2,14 +2,14 @@
 
 package com.gjg.login;
 
-import IGU.Principal;
+import IGU.LoginInicial;
 
 
 public class Login {
 
     public static void main(String[] args) {
         
-        Principal principal= new Principal();
+        LoginInicial principal= new LoginInicial();
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);
         
