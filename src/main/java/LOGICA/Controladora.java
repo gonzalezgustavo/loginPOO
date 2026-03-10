@@ -8,31 +8,38 @@ public class Controladora {
     
     ControladorPersistencia controlPersis= new ControladorPersistencia();
 
-    public String validarUsuario(String usuario, String contrasenia) {
+    public Usuario validarUsuario(String usuario, String contrasenia) {
    
-        String mensaje="";
+      //  String mensaje="";
+      Usuario usr= null;
         List<Usuario> listaUsuarios= controlPersis.traerUsuarios();
     
        for (Usuario usu : listaUsuarios ){
            
            if(usu.getNombreUsuario().equals(usuario)){
                if(usu.getContrasenia().equals(contrasenia)){
-                   mensaje="Usuario y Contraseña correctos";
-                   return mensaje;
+              //     mensaje="Usuario y Contraseña correctos";
+               usr=usu;
+              return usr;
                
                }
                else {
-                   mensaje="Contraseña incorrecta "  ;
-                  
+                   //mensaje="Contraseña incorrecta "  ;
+                  usr=null;
+                  return usr;
                }
            }else {
-               mensaje="Usuario no encontrado " ;
-               
+               //mensaje="Usuario no encontrado " ;
+               usr=null;
            }
        
        }
        
-return mensaje;
+return usr;
+    }
+
+    public String validarRol(String usuario) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

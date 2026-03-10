@@ -1,15 +1,19 @@
 
 package IGU;
 
+import LOGICA.Controladora;
+import LOGICA.Usuario;
+
 public class PrincipalUser extends javax.swing.JFrame {
-    
+
+    Controladora control;
+    Usuario usr;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PrincipalUser.class.getName());
 
-    /**
-     * Creates new form PrincipalUser
-     */
-    public PrincipalUser() {
+    public PrincipalUser(Controladora control,Usuario usr) {
         initComponents();
+        this.control=control;
+        this.usr=usr;
     }
 
     /**
@@ -30,6 +34,11 @@ public class PrincipalUser extends javax.swing.JFrame {
         txtUserName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Sistema Administrador de Usuarios");
@@ -123,8 +132,14 @@ public class PrincipalUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+        this.txtUserName.setText(usr.getNombreUsuario());
+        
+    }//GEN-LAST:event_formWindowOpened
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -2,6 +2,7 @@
 package IGU;
 
 import LOGICA.Controladora;
+import LOGICA.Usuario;
 
 
 public class LoginInicial extends javax.swing.JFrame {
@@ -142,10 +143,32 @@ public class LoginInicial extends javax.swing.JFrame {
     
         String usuario= txtUsuario.getText();
         String contrasenia=txtContraseña.getText();
-        String mensaje= control.validarUsuario(usuario,contrasenia);
+        Usuario usr= control.validarUsuario(usuario,contrasenia);
         
-        txtTextArea.setText(mensaje);
         
+        if (usr!=null){
+            String rol=usr.getUnRol().getNombreRol();
+            
+            if (rol.equals("admin")){
+                PrincipalAdmin pAdmin = new PrincipalAdmin(control, usr);
+                pAdmin.setVisible(true);
+                pAdmin.setLocationRelativeTo(null);
+                this.dispose();
+            }
+            if (rol.equals("user")){
+                PrincipalUser pUser=new PrincipalUser(control,usr);
+                pUser.setVisible(true);
+                pUser.setLocationRelativeTo(null);
+                this.dispose();
+            
+            }
+            
+            
+        }
+        
+        else {
+            txtTextArea.setText("Usuario o contraseña incorrectos");
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
