@@ -3,6 +3,8 @@ package IGU;
 
 import LOGICA.Controladora;
 import LOGICA.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrincipalAdmin extends javax.swing.JFrame {
@@ -188,6 +190,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
        this.txtUserName.setText(usr.getNombreUsuario());
+       cargarTabla();
     }//GEN-LAST:event_formWindowOpened
 
    
@@ -204,4 +207,45 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTabla() {
+        
+        //definir el modelo que queremos q tenga la tabla
+        DefaultTableModel modeloTabla=new DefaultTableModel(){
+        
+            
+        //que fila y columnas no sean editables
+            @Override
+            public boolean isCellEditable(int row,int column ){
+                return false;
+            }
+    
+        };
+        
+        //establecemos los nombres de las columnas
+        
+        String titulos[]= {"Id","Usuario","Rol"};
+        modeloTabla.setColumnIdentifiers(titulos);
+        
+        //traer de la bd de la lista de usuarios
+        List <Usuario> listaUsuarios= control.traerUsuarios();
+        
+        //preguntamos si esta vacia
+        if (listaUsuarios!=null){
+            
+            //recorrer la lista
+            for (Usuario usu : listaUsuarios){
+                
+                Object [] objeto={usu.getId(),usu.getNombreUsuario(),usu.getUnRol().getNombreRol()};
+                modeloTabla.addRow(objeto);
+            }
+        
+        
+        }
+       
+        
+        tblUsuarios.setModel(modeloTabla);
+    
+    
+    }
 }

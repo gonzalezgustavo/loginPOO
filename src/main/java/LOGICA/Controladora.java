@@ -38,8 +38,10 @@ public class Controladora {
 return usr;
     }
 
-    public String validarRol(String usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Usuario> traerUsuarios() {
+        
+      
+       return controlPersis.traerUsuarios();
     }
 
 }
