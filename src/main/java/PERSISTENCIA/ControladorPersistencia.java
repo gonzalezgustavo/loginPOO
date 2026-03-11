@@ -1,6 +1,7 @@
 
 package PERSISTENCIA;
 
+import LOGICA.Rol;
 import LOGICA.Usuario;
 import java.util.List;
 
@@ -13,6 +14,15 @@ public class ControladorPersistencia {
     public List<Usuario> traerUsuarios() {
     
     return usuJpa.findUsuarioEntities();
+    }
+
+    public List<Rol> traerRoles() {
+    return rolJpa.findRolEntities();
+    }
+
+    public void crearUsuario(Usuario usu) {
+   
+        usuJpa.create(usu);
     }
     
     

@@ -1,6 +1,7 @@
 
 package LOGICA;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,8 @@ import java.io.Serializable;
 public class Usuario implements Serializable {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO) 
+    @GeneratedValue(strategy=GenerationType.IDENTITY) 
+    @Column(name = "ID")
     private int id;
     private String nombreUsuario;
     private String contrasenia;
