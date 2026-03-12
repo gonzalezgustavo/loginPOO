@@ -3,22 +3,25 @@ package IGU;
 
 import LOGICA.Controladora;
 import LOGICA.Rol;
-
+import LOGICA.Usuario;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 
-public class AltaUsuarios extends javax.swing.JFrame {
+public class EdicionUsuarios extends javax.swing.JFrame {
     
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EdicionUsuarios.class.getName());
+
+    int id_usuario;
     Controladora control;
-
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AltaUsuarios.class.getName());
-
-   
-    public AltaUsuarios(Controladora control) {
+    Usuario usu;
+    public EdicionUsuarios(int id_usuario,Controladora control) {
         initComponents();
-        this.control= control;
+        this.id_usuario=id_usuario;
+        this.control=control;
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -44,7 +47,7 @@ public class AltaUsuarios extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel1.setText("Alta de Usuarios");
+        jLabel1.setText("Edición de Usuarios");
 
         jLabel2.setText("Nombre de Usuario:");
 
@@ -147,7 +150,44 @@ public class AltaUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtContra.setText("");
+        txtUsuario.setText("");
+        cmbRol.setSelectedIndex(0);
+
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+
+           String usuario=txtUsuario.getText();
+        String contra=txtContra.getText();
+        String rol= (String) cmbRol.getSelectedItem();
+        
+        control.editarUsuario(usu,usuario,contra,rol);
+        
+        mostrarMensaje ("Se edito el usuario correctamente","Info","Edicion correcta");
+        
+        this.dispose();
+
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+
+        this.dispose();
+
+    }//GEN-LAST:event_btnVolverActionPerformed
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //buscar el usuario
+        
+        usu=control.traerUsuario(id_usuario);
+        
+        //cargando datos en la interfaz
+        txtUsuario.setText(usu.getNombreUsuario());
+        txtContra.setText(usu.getContrasenia());
+        
+        //cargar los roles ramdom
         List <Rol> listaRoles= control.traerRoles();
         
         if (listaRoles!=null){
@@ -156,33 +196,23 @@ public class AltaUsuarios extends javax.swing.JFrame {
         }
         }
         
+        //asignar el rol
+        String rol= usu.getUnRol().getNombreRol();
+        
+        int cantidadItems= cmbRol.getItemCount();
+        
+        for (int i=0; i<cantidadItems;i++){
+        
+            if (String.valueOf(cmbRol.getItemAt(i)).equals(rol)){
+                cmbRol.setSelectedIndex(i);
+            }
+        }
+        
+        
     }//GEN-LAST:event_formWindowOpened
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        txtContra.setText("");
-        txtUsuario.setText("");
-        cmbRol.setSelectedIndex(0);
-        
-        
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+  
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
-        String usuario=txtUsuario.getText();
-        String contra=txtContra.getText();
-        String rol= (String) cmbRol.getSelectedItem();
-        
-        control.crearUsuario(usuario,contra,rol);
-        
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        
-        this.dispose();
-                
-    }//GEN-LAST:event_btnVolverActionPerformed
-
-   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
@@ -196,4 +226,29 @@ public class AltaUsuarios extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtContra;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+  public void mostrarMensaje(String mensaje, String tipo, String titulo){
+        
+        JOptionPane optionPane= new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+         }
+        JDialog dialog= optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+      
+    }
+
+
+
+
+
+
+
+
+
+
 }

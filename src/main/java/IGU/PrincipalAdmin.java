@@ -4,6 +4,8 @@ package IGU;
 import LOGICA.Controladora;
 import LOGICA.Usuario;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -173,15 +175,67 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         AltaUsuarios altaUsu=new AltaUsuarios(control);
         altaUsu.setVisible(true);
         altaUsu.setLocationRelativeTo(null);
-        this.dispose();
+        
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+       
+        //validar que la tabla tenga elementos
+        if (tblUsuarios.getRowCount()>0){
+            //controlar que se haya seleccionado un elemento
+            if (tblUsuarios.getSelectedRow()!=-1){
+                //obtengo la id del elemento a eliminar
+                
+                int id_usuario= Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(),0)));
+                //llamar ventana a editar
+                
+                EdicionUsuarios pantallaEdi = new EdicionUsuarios (id_usuario,control);
+                pantallaEdi.setVisible(true);
+                pantallaEdi.setLocationRelativeTo(null);
+                
+            
+            }
+            else {
+                mostrarMensaje ("No selecciono un usuario","Error","Error al editar");
+            }
+        
+        
+        }
+        else {
+            mostrarMensaje ("Tabla Vacia","Error","Error al editar");
+        }
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+        
+        //validar que la tabla tenga elementos.
+        if (tblUsuarios.getRowCount () >0){
+            
+            //Controlar que se haya seleccionado un elemento
+            if (tblUsuarios.getSelectedRow()!=-1){
+                //obtengo la id del elemento a eliminar
+                
+                int id_usuario= Integer.parseInt(String.valueOf(tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(),0)));
+                
+                //llamo al metodo borrar usuario
+                control.borrarUsuario(id_usuario);
+                mostrarMensaje ("Se borró el usuario correctamente","Info","Eliminación correcta");
+                
+                //avisar que se borro ok y cargar tabla nuevamente
+                
+                cargarTabla();
+            
+            }
+            else {
+                mostrarMensaje ("No selecciono un usuario","Error","Error al borrar");
+            }
+        
+        
+        }
+        else {
+            mostrarMensaje ("No hay usuario","Error","Error al borrar");
+        }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
@@ -213,6 +267,21 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 
+    
+    public void mostrarMensaje(String mensaje, String tipo, String titulo){
+        
+        JOptionPane optionPane= new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+         }
+        JDialog dialog= optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+      
+    }
     private void cargarTabla() {
         
         //definir el modelo que queremos q tenga la tabla
